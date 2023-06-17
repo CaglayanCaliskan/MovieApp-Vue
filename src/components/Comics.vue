@@ -1,30 +1,23 @@
-<script setup></script>
+<script setup>
+import Comic from './Comic.vue';
+const props = defineProps({
+  comicsList: {
+    type: Array,
+  },
+});
+</script>
 
 <template>
   <h1>NETFLIX ORIGINALS</h1>
-  <section>
-    <div class="card">1</div>
-    <div class="card">2</div>
-    <div class="card">3</div>
-    <div class="card">4</div>
-    <div class="card">5</div>
-    <div class="card">6</div>
+  <section class="list">
+    <Comic v-for="comic in comicsList" :comic="comic"> </Comic>
   </section>
 </template>
 
 <style scoped>
-section {
+.list {
   display: grid;
-  place-items: center;
   grid-template-columns: auto auto auto auto;
   gap: 2rem;
-}
-section .card {
-  border: 1px solid pink;
-  height: 200px;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>
