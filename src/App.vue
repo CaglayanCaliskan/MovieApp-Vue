@@ -1,12 +1,15 @@
 <script setup>
 import Header from './components/Header.vue';
-import Comics from './components/Comics.vue';
+import ComicsList from './components/ComicsList.vue';
 import axios from 'axios';
-import {onMounted, ref} from 'vue';
+import {onMounted, provide, reactive, ref} from 'vue';
 
 let comicsList = ref([]);
 const apiKey = import.meta.env.VITE_API_KEY;
 const hashedKey = import.meta.env.VITE_HASH_PASS;
+
+const favoriteList = reactive([]);
+provide('favoriteList', favoriteList);
 
 async function getComics() {
   try {
@@ -32,7 +35,7 @@ onMounted(() => getComics());
 <template>
   <div class="container">
     <Header></Header>
-    <Comics v-bind:comicsList="comicsList"></Comics>
+    <ComicsList v-bind:comicsList="comicsList"></ComicsList>
   </div>
 </template>
 

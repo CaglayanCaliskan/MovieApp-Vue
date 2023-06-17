@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <h1>NETFLIX ORIGINALS</h1>
   <section class="list">
-    <Comic v-for="comic in comicsList" :comic="comic"> </Comic>
+    <Comic v-for="comic in comicsList" :comic="comic" :key="comic.id"> </Comic>
   </section>
 </template>
 
