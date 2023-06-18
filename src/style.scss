@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$primary-color: #f8f9fa;
+$secondary-color: #6c757d;
+$fav-color: yellow;
+$background-color: #111;
+
+
+@mixin button-style($background-color, $text-color) {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: $background-color;
+  color: $text-color;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($background-color, 10%);
+  }
+}
+
+
+.container {
+  background-color: $background-color;
+
+  font-family: Verdana, sans-serif;
+
+  h1 {
+    color: $primary-color;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+
+    color: $primary-color;
+    font-size: 1.2rem;
+    margin: 20px;
+
+
+  }
+
+  p {
+    color: $primary-color;
+    line-height: 1.5;
+    max-width: 500px;
+    ;
+  }
+
+  .button {
+    @include button-style($primary-color, black);
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 700
+  }
+
+  .button.fav {
+    @include button-style($fav-color, black);
+    margin-top: 20px;
+
+  }
+
+  .link-button {
+    @include button-style($secondary-color, $primary-color);
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .container {
+    font-size: 16px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+}
+
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

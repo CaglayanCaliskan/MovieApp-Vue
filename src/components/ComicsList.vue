@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <h1>NETFLIX ORIGINALS</h1>
+  <h2>NETFLIX ORIGINALS COMİCS</h2>
   <section class="list">
     <Comic v-for="comic in comicsList" :comic="comic" :key="comic.id"> </Comic>
   </section>
@@ -17,7 +17,20 @@ const props = defineProps({
 <style scoped>
 .list {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  padding: 20px;
+}
+@media screen and (max-width: 1200px) {
+  .list {
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (max-width: 668px) {
+  .list {
+    grid-template-columns: auto;
+    padding: 10px;
+    gap: 1rem;
+  }
 }
 </style>

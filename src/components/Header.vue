@@ -8,8 +8,8 @@ import NavBar from './NavBar.vue';
     <section>
       <h1>Money Heist</h1>
       <div>
-        <button>Play</button>
-        <button>My List</button>
+        <button class="link-button">Play</button>
+        <button class="link-button">My List</button>
       </div>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
@@ -22,7 +22,9 @@ import NavBar from './NavBar.vue';
 <style scoped>
 header {
   height: 400px;
-  border: 1px solid blue;
+  background-image: url('../assets/images/banner.jpg');
+  background-size: cover;
+  background-position: center;
 }
 section {
   height: inherit;

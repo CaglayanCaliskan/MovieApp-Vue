@@ -27,17 +27,36 @@ export default {
     isFavorite(id) {
       return this.favorites.some((f) => f == id);
     },
+    handleTitle(t) {
+      const pattern = /^(.+?)\s\((\d+)\)(.*)/;
+      const match = t.match(pattern);
+      if (match) {
+        const result = match[1];
+        return result;
+      }
+    },
+    handleDesc(t) {
+      if (t == '#N/A' || t == '' || t == null) {
+        return 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam alias laborum explicabo consequuntur...';
+      } else {
+        const limitedSentence = t.split(' ').slice(0, 15).join(' ');
+        return limitedSentence + '...';
+      }
+    },
+    handleCreators(t) {
+      const limitedSentence = t.split(' ').slice(0, 5).join(' ');
+      return limitedSentence;
+    },
   },
 };
 </script>
 
 <template>
-  <div class="box" @click="isFavorite(comic.id)">
-    {{ comic.id }}
-    <li style="background-color: blue" v-for="fav in favorites">{{ fav }}</li>
-    <button @click="toggleFavorite(comic.id)">
-      {{ isFavorite(comic.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
-    </button>
+  <div
+    :class="!isFavorite(comic.id) ? 'box' : 'box fav'"
+    @click="isFavorite(comic.id)"
+  >
+    <!-- <li style="background-color: blue" v-for="fav in favorites">{{ fav }}</li> -->
     <div class="thumbnail">
       <img
         :src="comic.thumbnail.path + '.jpg'"
@@ -46,41 +65,52 @@ export default {
       />
     </div>
     <div class="info">
-      <p id="title"><span>Title</span> {{ comic.title }}</p>
-      <p id="description"><span>Description</span> {{ comic.description }}</p>
-      <span>Creators</span>
-      <div id="creators" v-for="creator in comic.creators.items">
-        {{ creator.name }}
+      <h2 id="title">{{ handleTitle(comic.title) }}</h2>
+      <p id="description">
+        {{ handleDesc(comic.description) }}
+      </p>
+      <h2>Creators</h2>
+      <div id="creators" v-for="(creator, index) in comic.creators.items">
+        <p>{{ index < 3 ? creator.name : '' }}</p>
       </div>
+      <div></div>
     </div>
+    <button
+      :class="!isFavorite(comic.id) ? 'button' : 'button fav'"
+      @click="toggleFavorite(comic.id)"
+    >
+      <img src="../assets/star.svg" alt="" />
+      {{ isFavorite(comic.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+    </button>
   </div>
 </template>
 <style scoped>
 .box {
-  border: 5px solid black;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   border-radius: 15px;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
+  justify-content: space-between;
 }
-.thumbnail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.box.fav {
+  outline: 1px solid yellow;
 }
 .info {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-.comic-image {
-  width: 100%; /* Dilediğiniz genişlik değerini ayarlayın */
-  height: 300px; /* Dilediğiniz yükseklik değerini ayarlayın */
-  background-size: cover;
+
+.thumbnail {
+  height: 400px;
 }
-span {
-  color: red;
-  font-size: 1.4rem;
-  display: block;
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 </style>
