@@ -1,5 +1,4 @@
 <script>
-import {ref, inject} from 'vue';
 import {useStore} from 'vuex';
 export default {
   name: 'Comic',
@@ -58,6 +57,16 @@ export default {
     :class="!isFavorite(comic.id) ? 'box' : 'box fav'"
     @click="isFavorite(comic.id)"
   >
+    <!-- <router-link
+      :to="{name: 'ComicDetail', params: {id: comic.id}}"
+      class="view-button"
+    >
+      <i
+        class="fa-solid fa-arrow-up-right-from-square"
+        style="color: #ffffff"
+      ></i>
+    </router-link> -->
+
     <div class="thumbnail">
       <img
         :src="comic.thumbnail.path + '.jpg'"
@@ -115,5 +124,14 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 10px;
+}
+.view-button {
+  position: absolute;
+  right: 20px;
+  top: 1rem;
+  padding: 10px;
+  border-radius: 5%;
+  color: white;
+  text-decoration: none;
 }
 </style>

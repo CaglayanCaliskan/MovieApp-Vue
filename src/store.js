@@ -13,11 +13,17 @@ export default createStore({
             } else {
                 state.favorites.push(id);
             }
+        },
+        toggleMenu(state) {
+            state.menu = !state.menu
         }
     },
     actions: {
         toggleFavorite(context, id) {
             context.commit('toggleFavorite', id);
+        },
+        toggleMenu(context) {
+            context.commit('toggleMenu')
         }
     },
     getters: {
@@ -26,6 +32,9 @@ export default createStore({
         },
         getFavorites(state) {
             return state.favorites;
-        }
+        },
+        // getItemById: (state) => (id) => {
+        //     return state.favorites.find(item => item.id === id);
+        // },
     }
 });

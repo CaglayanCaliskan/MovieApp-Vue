@@ -20,18 +20,23 @@ onBeforeUnmount(() => {
 function handleScroll() {
   isScrolled.value = window.pageYOffset > 0;
 }
+
+const props = defineProps({
+  toggleMenu: Function,
+});
 </script>
 
 <template>
   <nav :class="{navbar: true, scrolled: isScrolled}">
     <div>
-      <img
-        src="../assets/images/netflix-logo.png"
-        alt="Logo"
-        class="logo-image"
-      />
+      <!-- <router-link to="/"
+        ><img
+          src="../assets/images/netflix-logo.png"
+          alt="Logo"
+          class="logo-image"
+      /></router-link> -->
     </div>
-    <div id="counter">
+    <div id="counter" @click="toggleMenu()">
       <img
         src="../assets/images/netflix-avatar.png"
         class="logo-image"
@@ -61,17 +66,23 @@ nav > div {
   width: 100px;
   height: 30px;
   display: flex;
+  justify-content: space-around;
 }
 .logo-image {
-  width: 100%;
   height: 100%;
   object-fit: contain;
 }
 .scrolled {
   background-color: rgba(0, 0, 0, 0.911);
 }
+
 #counter p {
   color: yellow;
   font-size: 1.2rem;
+}
+#counter:hover {
+  outline: 1px solid yellow;
+  border-radius: 3px;
+  cursor: pointer;
 }
 </style>

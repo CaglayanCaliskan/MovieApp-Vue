@@ -33,7 +33,7 @@ onMounted(() => getComics());
 
 <template>
   <div class="container">
-    <Header></Header>
+    <Header v-bind:comicsList="comicsList"></Header>
     <ComicsList v-bind:comicsList="comicsList"></ComicsList>
   </div>
 </template>
