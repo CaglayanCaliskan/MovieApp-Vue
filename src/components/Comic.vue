@@ -1,6 +1,6 @@
 <script>
 import {ref, inject} from 'vue';
-
+import {useStore} from 'vuex';
 export default {
   name: 'Comic',
   props: {
@@ -9,44 +9,46 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      favorites: inject('favoriteList'),
-    };
-  },
 
-  methods: {
-    toggleFavorite(id) {
-      const fav = this.favorites.find((m) => m == id);
-      if (fav) {
-        this.favorites.splice(this.favorites.indexOf(id), 1);
-      } else {
-        this.favorites.push(id);
-      }
-    },
-    isFavorite(id) {
-      return this.favorites.some((f) => f == id);
-    },
-    handleTitle(t) {
+  setup(props) {
+    const store = useStore();
+    const toggleFavorite = (id) => {
+      store.dispatch('toggleFavorite', id);
+    };
+    const isFavorite = (id) => {
+      return store.getters.isFavorite(id);
+    };
+
+    const handleTitle = (t) => {
       const pattern = /^(.+?)\s\((\d+)\)(.*)/;
       const match = t.match(pattern);
       if (match) {
         const result = match[1];
         return result;
       }
-    },
-    handleDesc(t) {
+    };
+
+    const handleDesc = (t) => {
       if (t == '#N/A' || t == '' || t == null) {
         return 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam alias laborum explicabo consequuntur...';
       } else {
         const limitedSentence = t.split(' ').slice(0, 15).join(' ');
         return limitedSentence + '...';
       }
-    },
-    handleCreators(t) {
+    };
+
+    const handleCreators = (t) => {
       const limitedSentence = t.split(' ').slice(0, 5).join(' ');
       return limitedSentence;
-    },
+    };
+
+    return {
+      toggleFavorite,
+      isFavorite,
+      handleTitle,
+      handleDesc,
+      handleCreators,
+    };
   },
 };
 </script>
@@ -56,7 +58,6 @@ export default {
     :class="!isFavorite(comic.id) ? 'box' : 'box fav'"
     @click="isFavorite(comic.id)"
   >
-    <!-- <li style="background-color: blue" v-for="fav in favorites">{{ fav }}</li> -->
     <div class="thumbnail">
       <img
         :src="comic.thumbnail.path + '.jpg'"
@@ -79,7 +80,7 @@ export default {
       :class="!isFavorite(comic.id) ? 'button' : 'button fav'"
       @click="toggleFavorite(comic.id)"
     >
-      <img src="../assets/star.svg" alt="" />
+      <i class="fa-sharp fa-regular fa-heart"></i>
       {{ isFavorite(comic.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
     </button>
   </div>
@@ -107,6 +108,8 @@ export default {
 
 .thumbnail {
   height: 400px;
+  max-width: 300px;
+  margin: auto;
 }
 .thumbnail img {
   width: 100%;

@@ -3,13 +3,12 @@ import Header from './components/Header.vue';
 import ComicsList from './components/ComicsList.vue';
 import axios from 'axios';
 import {onMounted, provide, reactive, ref} from 'vue';
+import {useStore} from 'vuex';
 
+const store = useStore();
 let comicsList = ref([]);
 const apiKey = import.meta.env.VITE_API_KEY;
 const hashedKey = import.meta.env.VITE_HASH_PASS;
-
-const favoriteList = reactive([]);
-provide('favoriteList', favoriteList);
 
 async function getComics() {
   try {

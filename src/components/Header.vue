@@ -1,5 +1,8 @@
 <script setup>
 import NavBar from './NavBar.vue';
+import {useStore} from 'vuex';
+
+const store = useStore();
 </script>
 
 <template>
@@ -9,7 +12,12 @@ import NavBar from './NavBar.vue';
       <h1>Money Heist</h1>
       <div>
         <button class="link-button">Play</button>
-        <button class="link-button">My List</button>
+        <button
+          class="link-button"
+          @click="console.log(store.getters.getFavorites)"
+        >
+          My List
+        </button>
       </div>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet

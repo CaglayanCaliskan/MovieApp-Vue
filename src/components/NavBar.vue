@@ -1,15 +1,13 @@
 <script setup>
-import {inject, onMounted, watch, ref, onBeforeUnmount} from 'vue';
-
-//fav count
-const favoriteList = inject('favoriteList');
-const count = ref(favoriteList.length);
-watch(favoriteList, (newValue) => {
-  count.value = newValue.length;
-});
-//nav bar color
+import {onMounted, ref, onBeforeUnmount, computed} from 'vue';
+import {useStore} from 'vuex';
 
 const isScrolled = ref(false);
+const store = useStore();
+
+const favoriteCount = computed(() => {
+  return store.getters.getFavorites.length;
+});
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
@@ -33,13 +31,14 @@ function handleScroll() {
         class="logo-image"
       />
     </div>
-    <div>
+    <div id="counter">
       <img
         src="../assets/images/netflix-avatar.png"
         class="logo-image"
         alt=""
       />
-      <p id="counter">{{ count > 0 ? count : 'empty' }}</p>
+
+      <p>{{ favoriteCount > 0 ? favoriteCount : 'empty' }}</p>
     </div>
   </nav>
 </template>
@@ -71,7 +70,7 @@ nav > div {
 .scrolled {
   background-color: rgba(0, 0, 0, 0.911);
 }
-#counter {
+#counter p {
   color: yellow;
   font-size: 1.2rem;
 }
