@@ -4,6 +4,7 @@ import {useStore} from 'vuex';
 
 const isScrolled = ref(false);
 const store = useStore();
+import {useRouter} from 'vue-router';
 
 const favoriteCount = computed(() => {
   return store.getters.getFavorites.length;
@@ -29,12 +30,12 @@ const props = defineProps({
 <template>
   <nav :class="{navbar: true, scrolled: isScrolled}">
     <div>
-      <!-- <router-link to="/"
+      <router-link to="/"
         ><img
           src="../assets/images/netflix-logo.png"
           alt="Logo"
           class="logo-image"
-      /></router-link> -->
+      /></router-link>
     </div>
     <div id="counter" @click="toggleMenu()">
       <img
