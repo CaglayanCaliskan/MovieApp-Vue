@@ -5,8 +5,8 @@ import axios from 'axios';
 import {onMounted, ref} from 'vue';
 
 let comicsList = ref([]);
-const apiKey = import.meta.env.VITE_API_KEY;
-const hashedKey = import.meta.env.VITE_HASH_PASS;
+const apiKey = process.env.VITE_API_KEY;
+const hashedKey = process.env.VITE_HASH_PASS;
 
 async function getComics() {
   try {
