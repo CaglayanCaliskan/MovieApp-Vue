@@ -3,7 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
     state: {
         favorites: [],
-        menu: false
+        menu: false,
+        selected: {}
     },
     mutations: {
         toggleFavorite(state, id) {
@@ -16,6 +17,9 @@ export default createStore({
         },
         toggleMenu(state) {
             state.menu = !state.menu
+        },
+        handleSelected(state, comic) {
+            state.selected = comic
         }
     },
     actions: {
@@ -24,6 +28,10 @@ export default createStore({
         },
         toggleMenu(context) {
             context.commit('toggleMenu')
+        },
+        handleSelected(context, comic) {
+            context.commit('handleSelected', comic)
+
         }
     },
     getters: {

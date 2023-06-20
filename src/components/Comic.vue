@@ -17,6 +17,9 @@ export default {
     const isFavorite = (id) => {
       return store.getters.isFavorite(id);
     };
+    const handleSelected = (comic) => {
+      store.dispatch('handleSelected', comic);
+    };
 
     const handleTitle = (t) => {
       const pattern = /^(.+?)\s\((\d+)\)(.*)/;
@@ -47,6 +50,7 @@ export default {
       handleTitle,
       handleDesc,
       handleCreators,
+      handleSelected,
     };
   },
 };
@@ -57,15 +61,20 @@ export default {
     :class="!isFavorite(comic.id) ? 'box' : 'box fav'"
     @click="isFavorite(comic.id)"
   >
-    <!-- <router-link
-      :to="{name: 'ComicDetail', params: {id: comic.id}}"
-      class="view-button"
-    >
-      <i
-        class="fa-solid fa-arrow-up-right-from-square"
-        style="color: #ffffff"
-      ></i>
-    </router-link> -->
+    <div @click="handleSelected(comic)">
+      <router-link
+        :to="{
+          name: 'ComicDetails',
+          params: {id: comic.id},
+        }"
+        class="view-button"
+      >
+        <i
+          class="fa-solid fa-arrow-up-right-from-square"
+          style="color: #ffffff"
+        ></i>
+      </router-link>
+    </div>
 
     <div class="thumbnail">
       <img
